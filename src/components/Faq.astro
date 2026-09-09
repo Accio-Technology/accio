@@ -1,0 +1,36 @@
+---
+const faqs = [
+    {
+        q: 'Do you build websites for new businesses from scratch?',
+        a: "Yes! If you don't have an existing website, we handle the entire process from scratch—including layout design, content structuring, mobile optimization, and launching on custom cloud hosting.",
+    },
+    {
+        q: 'How does custom cloud infrastructure eliminate monthly builder fees?',
+        a: 'Traditional website builders charge monthly fees because they bundle proprietary software with hosting. When we build your site on self-maintained cloud infrastructure, your pages run directly on high-speed global cloud networks without recurring software subscription costs.',
+    },
+    {
+        q: 'When can I cancel my existing website builder subscription?',
+        a: "If you're migrating an existing site, you can immediately cancel your Wix, Squarespace, or Shopify subscription the moment we launch your new custom cloud site and point your domain.",
+    },
+    {
+        q: 'Will I lose my existing Google search rankings during a migration?',
+        a: 'No. We map precise 301 redirects, maintain URL structures, and update your XML sitemaps to ensure Google seamlessly indexes your faster new site with zero traffic loss.',
+    },
+];
+---
+
+<section id="faq" class="faq-section">
+    <div class="container">
+        <div class="section-header">
+            <h2>Frequently Asked Questions</h2>
+        </div>
+        <div class="faq-container">
+            {faqs.map((faq) => (
+                <div class="faq-item">
+                    <h3>{faq.q}</h3>
+                    <p>{faq.a}</p>
+                </div>
+            ))}
+        </div>
+    </div>
+</section>

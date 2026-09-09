@@ -1,0 +1,39 @@
+---
+import { Image } from 'astro:assets';
+import fullLogo from '../assets/full-logo.webp';
+
+const navLinks = [
+    { href: '#solutions', label: 'What We Do' },
+    { href: '#comparison', label: 'Cost Comparison' },
+    { href: '#services', label: 'Services' },
+    { href: '#faq', label: 'FAQ' },
+];
+---
+
+<header>
+    <div class="container">
+        <nav>
+            <a href="/" class="logo">
+                <Image src={fullLogo} alt="Accio Technology Logo" class="logo-img">
+            </a>
+
+            <!-- Hamburger Mobile Toggle -->
+            <button class="mobile-menu-toggle" id="mobileMenuBtn" aria-label="Toggle navigation menu">
+                <svg viewBox="0 0 24 24">
+                    <path id="hamburgerIcon" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+
+            <!-- Nav Menu Links -->
+            <ul class="nav-links" id="navLinks">
+                {navLinks.map((link) => (
+                    <li><a href={link.href}>{link.label}</a></li>
+                ))}
+                <li class="mobile-cta"><a href="#contact" class="btn btn-primary">Get Started</a></li>
+            </ul>
+
+            <!-- Desktop Get Started CTA Button (Positioned Far Right) -->
+            <a href="#contact" class="btn btn-primary nav-cta-desktop">Get Started</a>
+        </nav>
+    </div>
+</header>

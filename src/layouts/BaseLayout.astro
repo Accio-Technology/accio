@@ -1,0 +1,56 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+import ogImage from '../assets/full-logo.webp';
+const { title = 'Accio Technology | Custom Web Design & Business Website Migrations' } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{title}</title>
+        <meta name="description" content="We design brand-new custom websites and migrate existing sites off Wix, Squarespace, or Shopify onto fast cloud infrastructure. Zero monthly builder fees, superior speed, and better search rankings.">
+        <meta name="keywords" content="custom web design, website migration, new business website, move off wix, custom website hosting, squarespace alternative, small business web design, website speed optimization">
+
+        <!-- Open Graph / Social Sharing -->
+        <meta property="og:title" content="Accio Technology | Custom Web Design & Subscriptions-Free Migrations">
+        <meta property="og:description" content="Launch a new custom site or migrate off Wix, Squarespace, or Shopify. Fast, self-maintained cloud infrastructure with $0 monthly builder fees.">
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="https://acciotechnology.com/">
+        <meta property="og:image" content={`https://acciotechnology.com${ogImage.src}`}>
+        <meta property="og:image:alt" content="Accio Technology Logo">
+
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+        <link rel="icon" type="image/webp" sizes="96x96" href="/images/a-logo.webp">
+
+        <!-- Structured Data (Schema.org for SEO) -->
+        <script type="application/ld+json" set:html={JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "ProfessionalService",
+            "name": "Accio Technology",
+            "description": "Custom website design, development, and migration services for small businesses.",
+            "url": "https://acciotechnology.com",
+            "priceRange": "$$",
+            "offers": {
+                "@type": "Offer",
+                "name": "Custom Web Design & Business Site Migration"
+            }
+        })}></script>
+    </head>
+    <body>
+        <Header />
+        <slot />
+        <Footer />
+
+        <!-- JavaScript for Mobile Navigation Toggle -->
+        <script>
+            import '../scripts/main.ts';
+        </script>
+    </body>
+</html>

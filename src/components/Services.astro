@@ -1,0 +1,38 @@
+---
+const features = [
+    {
+        icon: '1',
+        title: 'Bespoke Design & Development',
+        text: "Clean, modern visual design crafted specifically for your industry. We don't use generic drag-and-drop templates that look like everyone else's site.",
+    },
+    {
+        icon: '2',
+        title: 'Turnkey Migration & Setup',
+        text: 'We handle everything from domain setup, DNS records, content transfer, and cloud deployment with zero disruption to your daily operations.',
+    },
+    {
+        icon: '3',
+        title: 'SEO & Speed Optimization',
+        text: 'Built with lightweight semantic HTML and schema markup. Engineered from day one to achieve 95+ performance scores on Google PageSpeed.',
+    },
+];
+---
+
+<section id="services" class="features-section">
+    <div class="container">
+        <div class="section-header">
+            <h2>Engineered for Business Growth</h2>
+            <p>High-end technical execution tailored to get your business more calls, inquiries, and customers.</p>
+        </div>
+
+        <div class="features-grid">
+            {features.map((feature) => (
+                <div class="feature-card">
+                    <div class="feature-icon">{feature.icon}</div>
+                    <h3>{feature.title}</h3>
+                    <p>{feature.text}</p>
+                </div>
+            ))}
+        </div>
+    </div>
+</section>
