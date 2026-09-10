@@ -28,12 +28,9 @@ const turnstileSiteKey = import.meta.env.TURNSTILE_SITE_KEY || '';
             </div>
 
             <div
-                class="cf-turnstile"
+                id="turnstile-widget"
                 data-sitekey={turnstileSiteKey}
-                data-size="invisible"
-                data-callback="onTurnstileSuccess"
-                data-error-callback="onTurnstileError"
-                data-expired-callback="onTurnstileExpired"
+                aria-hidden="true"
             ></div>
 
             <button type="submit" class="btn btn-primary contact-submit" disabled>
