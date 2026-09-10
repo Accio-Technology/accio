@@ -65,7 +65,6 @@ if (contactForm) {
   }
 
   function onVerifySuccess(token: string) {
-    console.log('[turnstile] success, token length:', token.length);
     verified = true;
     retryCount = 0;
     currentToken = token;
@@ -77,7 +76,6 @@ if (contactForm) {
   }
 
   function onVerifyExpired() {
-    console.log('[turnstile] expired');
     verified = false;
     currentToken = '';
     updateButton();
@@ -85,7 +83,6 @@ if (contactForm) {
   }
 
   function onVerifyError(errorCode: string) {
-    console.log('[turnstile] error:', errorCode);
     verified = false;
     currentToken = '';
     updateButton();
@@ -98,7 +95,6 @@ if (contactForm) {
   }
 
   function onVerifyTimeout() {
-    console.log('[turnstile] timeout');
     verified = false;
     currentToken = '';
     updateButton();
@@ -106,7 +102,6 @@ if (contactForm) {
   }
 
   function resetWidget() {
-    console.log('[turnstile] reset');
     verified = false;
     currentToken = '';
     if (widgetId !== null && widgetReady) {
@@ -135,13 +130,11 @@ if (contactForm) {
       'expired-callback': onVerifyExpired,
       'timeout-callback': onVerifyTimeout,
     });
-    console.log('[turnstile] rendered widget:', widgetId);
   }
 
   function initTurnstile() {
     if (widgetReady || !(window as any).turnstile) return;
     widgetReady = true;
-    console.log('[turnstile] API ready');
     renderWidget();
   }
 
@@ -151,7 +144,6 @@ if (contactForm) {
   window.setTimeout(() => {
     if (!widgetReady) {
       window.clearInterval(pollTimer);
-      console.log('[turnstile] API failed to load before timeout');
       showError('Could not load verification. Please refresh the page.');
     }
   }, 15000);
