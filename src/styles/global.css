@@ -549,6 +549,117 @@ nav {
     font-size: 16px;
 }
 
+/* Contact Form */
+.contact-form {
+    max-width: 640px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    color: #CBD5E1;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 14px 16px;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    color: var(--white);
+    font-size: 16px;
+    font-family: inherit;
+    transition: border-color 0.2s, background 0.2s;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #64748B;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--blue-primary);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.contact-submit {
+    width: 100%;
+    padding: 16px 36px;
+    font-size: 16px;
+    cursor: pointer;
+    position: relative;
+}
+
+.contact-submit:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.btn-loading {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-loading[hidden] {
+    display: none;
+}
+
+.btn-loading svg {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.form-message {
+    margin-top: 16px;
+    padding: 14px 16px;
+    border-radius: 8px;
+    font-size: 15px;
+    text-align: center;
+}
+
+.form-message p {
+    margin: 0;
+}
+
+.form-success {
+    background: rgba(34, 197, 94, 0.15);
+    border: 1px solid rgba(34, 197, 94, 0.3);
+    color: #86EFAC;
+}
+
+.form-error {
+    background: rgba(239, 68, 68, 0.15);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: #FCA5A5;
+}
+
 /* Footer */
 footer {
     background: var(--navy-dark);
@@ -727,5 +838,23 @@ footer {
         flex-direction: column;
         gap: 12px;
         text-align: center;
+    }
+
+    /* Contact Form Mobile */
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .cta-banner {
+        padding: 60px 0;
+    }
+
+    .cta-banner h2 {
+        font-size: 28px;
+    }
+
+    .cta-banner p {
+        font-size: 16px;
     }
 }
