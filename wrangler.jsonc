@@ -6,5 +6,8 @@
   "assets": {
     "binding": "ASSETS",
     "directory": "./dist"
+  },
+  "vars": {
+    "TURNSTILE_SITE_KEY": "0x4AAAAAAEvLSGaYDHKfuG19"
   }
 }
