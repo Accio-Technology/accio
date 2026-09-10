@@ -597,10 +597,13 @@ footer {
 
     .nav-links {
         display: none;
-        position: absolute;
+        position: fixed;
         top: 80px;
         left: 0;
         width: 100%;
+        max-height: calc(100dvh - 80px);
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
         background: var(--white);
         flex-direction: column;
         padding: 24px;
@@ -609,6 +612,7 @@ footer {
         box-shadow: 0 15px 30px rgba(0,0,0,0.12);
         align-items: stretch;
         text-align: center;
+        z-index: 1001;
     }
 
     .nav-links.active {
