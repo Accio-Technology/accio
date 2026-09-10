@@ -10,7 +10,13 @@ interface ContactFormData {
   turnstileToken: string;
 }
 
-async function verifyTurnstile(token: string, secretKey: string, ip: string | null): Promise<boolean> {
+interface TurnstileVerification {
+  success: boolean;
+  errorCodes: string[] | undefined;
+  hostname: string | undefined;
+}
+
+async function verifyTurnstile(token: string, secretKey: string, ip: string | null): Promise<TurnstileVerification> {
   const formData = new URLSearchParams();
   formData.append('secret', secretKey);
   formData.append('response', token);
@@ -24,7 +30,11 @@ async function verifyTurnstile(token: string, secretKey: string, ip: string | nu
   });
 
   const json = await result.json();
-  return json.success === true;
+  return {
+    success: json.success === true,
+    errorCodes: json['error-codes'],
+    hostname: json.hostname,
+  };
 }
 
 function escapeHtml(str: string): string {
@@ -67,8 +77,15 @@ export const POST: APIRoute = async ({ request, locals }) => {
   }
 
   const ip = request.headers.get('CF-Connecting-IP');
-  const turnstileValid = await verifyTurnstile(turnstileToken, env.TURNSTILE_SECRET_KEY, ip);
-  if (!turnstileValid) {
+  const verification = await verifyTurnstile(turnstileToken, env.TURNSTILE_SECRET_KEY, ip);
+  console.log('[contact] Turnstile verification result', {
+    success: verification.success,
+    errorCodes: verification.errorCodes,
+    hostname: verification.hostname,
+    secretPresent: Boolean(env.TURNSTILE_SECRET_KEY),
+    siteKeyPresent: Boolean(env.TURNSTILE_SITE_KEY),
+  });
+  if (!verification.success) {
     return new Response(JSON.stringify({ error: 'Verification failed. Please try again.' }), {
       status: 403,
       headers: { 'Content-Type': 'application/json' },
@@ -113,12 +130,18 @@ export const POST: APIRoute = async ({ request, locals }) => {
   });
 
   if (!emailRes.ok) {
+    console.log('[contact] Resend email send failed', {
+      status: emailRes.status,
+      statusText: emailRes.statusText,
+      resendApiKeyPresent: Boolean(env.RESEND_API_KEY),
+    });
     return new Response(JSON.stringify({ error: 'Failed to send message. Please try again later.' }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' },
     });
   }
 
+  console.log('[contact] Resend email sent successfully');
   return new Response(JSON.stringify({ success: true }), {
     status: 200,
     headers: { 'Content-Type': 'application/json' },
