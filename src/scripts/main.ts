@@ -46,6 +46,7 @@ if (contactForm) {
   let pendingSubmit = false;
   let retryCount = 0;
   let currentToken = '';
+  let rendered = false;
 
   function showError(msg: string) {
     if (formErrorText) formErrorText.textContent = msg;
@@ -135,7 +136,24 @@ if (contactForm) {
   function initTurnstile() {
     if (widgetReady || !(window as any).turnstile) return;
     widgetReady = true;
-    renderWidget();
+    setupFormInteractionListeners();
+  }
+
+  function setupFormInteractionListeners() {
+    const formElements = contactForm.querySelectorAll('input, textarea');
+    const onInteraction = () => {
+      if (rendered) return;
+      rendered = true;
+      renderWidget();
+      formElements.forEach(el => {
+        el.removeEventListener('focus', onInteraction);
+        el.removeEventListener('input', onInteraction);
+      });
+    };
+    formElements.forEach(el => {
+      el.addEventListener('focus', onInteraction);
+      el.addEventListener('input', onInteraction);
+    });
   }
 
   const turnstileScript = document.querySelector('script[src*="turnstile"]');
@@ -201,7 +219,12 @@ if (contactForm) {
     if (!verified) {
       pendingSubmit = true;
       if (formError) formError.hidden = true;
-      resetWidget();
+      if (!rendered) {
+        rendered = true;
+        renderWidget();
+      } else {
+        resetWidget();
+      }
       return;
     }
     submitForm();
