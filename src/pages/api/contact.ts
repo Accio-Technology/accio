@@ -7,6 +7,7 @@ interface ContactFormData {
   email: string;
   subject: string;
   message: string;
+  company: string;
   turnstileToken: string;
 }
 
@@ -37,6 +38,13 @@ function escapeHtml(str: string): string {
 }
 
 export const POST: APIRoute = async ({ request, locals }) => {
+  if (request.headers.get('x-contact') !== 'accio') {
+    return new Response(JSON.stringify({ error: 'Invalid request' }), {
+      status: 400,
+      headers: { 'Content-Type': 'application/json' },
+    })
+  }
+
   const { env } = locals.runtime;
 
   let body: ContactFormData;
@@ -49,7 +57,13 @@ export const POST: APIRoute = async ({ request, locals }) => {
     });
   }
 
-  const { name, email, subject, message, turnstileToken } = body;
+  const { name, email, subject, message, company, turnstileToken } = body;
+  if (company !== "") {
+    return new Response(JSON.stringify({ error: 'Invalid request' }), {
+      status: 400,
+      headers: { 'Content-Type': 'application/json' },
+    })
+  }
 
   if (!name || !email || !subject || !message || !turnstileToken) {
     return new Response(JSON.stringify({ error: 'All fields are required' }), {

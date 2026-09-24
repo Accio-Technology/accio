@@ -26,6 +26,10 @@ const turnstileSiteKey = import.meta.env.TURNSTILE_SITE_KEY || '';
                 <label for="contact-message">Message</label>
                 <textarea id="contact-message" name="message" required placeholder="Tell us about your project..." rows="5"></textarea>
             </div>
+            <div class="contact-hp" aria-hidden="true">
+                <label for="contact-company">Company</label>
+                <input type="text" id="contact-company" name="company" tabindex="-1" autocomplete="off" />
+            </div>
 
             <div
                 id="turnstile-widget"

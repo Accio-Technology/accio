@@ -177,6 +177,7 @@ if (contactForm) {
       email: (contactForm.querySelector('#contact-email') as HTMLInputElement).value.trim(),
       subject: (contactForm.querySelector('#contact-subject') as HTMLInputElement).value.trim(),
       message: (contactForm.querySelector('#contact-message') as HTMLTextAreaElement).value.trim(),
+      company: (contactForm.querySelector('#contact-company') as HTMLInputElement).value.trim(),
       turnstileToken: currentToken,
     };
 
@@ -190,7 +191,7 @@ if (contactForm) {
     try {
       const res = await fetch('/api/contact', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'X-Contact': 'accio' },
         body: JSON.stringify(data),
       });
 

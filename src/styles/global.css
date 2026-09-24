@@ -564,6 +564,13 @@ nav {
     text-align: left;
 }
 
+.contact-hp {
+    position: absolute;
+    left: -9999px;
+    height: 0;
+    overflow: hidden;
+}
+
 .form-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
