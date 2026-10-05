@@ -1,18 +1,75 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Hero from '../components/Hero.astro';
-import Solutions from '../components/Solutions.astro';
-import Comparison from '../components/Comparison.astro';
-import Services from '../components/Services.astro';
-import Faq from '../components/Faq.astro';
-import CtaSection from '../components/CtaSection.astro';
+import Hero from '@common/components/Hero.astro';
+import Solutions from '@common/components/Solutions.astro';
+import Comparison from '@common/components/Comparison.astro';
+import Services from '@common/components/Services.astro';
+import Faq from '@common/components/Faq.astro';
+import CtaSection from '@common/components/CtaSection.astro';
+import ContactForm from '@common/components/ContactForm.astro';
+import Page from '../layouts/Page.astro';
+import { publicEnv } from '../config/env';
+import {
+    comparison,
+    cta,
+    faqs,
+    features,
+    hero,
+    servicesIntro,
+    solutions,
+    solutionsIntro,
+    speedCard,
+    stats,
+} from '../data/home';
 ---
 
-<BaseLayout>
-    <Hero />
-    <Solutions />
-    <Comparison />
-    <Services />
-    <Faq />
-    <CtaSection />
-</BaseLayout>
+<Page
+    title="Custom Web Design & Business Website Migrations"
+    turnstile>
+    <Hero
+        id="top"
+        {...hero}
+        {stats}>
+        <div slot="visual" class="hero-card">
+            <h3>{speedCard.heading}</h3>
+            <div class="speed-score">
+                <div class="score-circle">{speedCard.score}</div>
+                <p>{speedCard.scoreLabel}</p>
+            </div>
+            <div class="score-details">
+                {
+                    speedCard.rows.map((row) => (
+                        <div class="score-row">
+                            <span>{row.label}</span>
+                            <span class="value" data-tone={row.tone}>{row.value}</span>
+                        </div>
+                    ))
+                }
+            </div>
+        </div>
+    </Hero>
+
+    <Solutions
+        id="solutions"
+        title={solutionsIntro.title}
+        subtitle={solutionsIntro.subtitle}
+        items={solutions} />
+
+    <Comparison
+        id="comparison"
+        title="Stop Renting Your Business Website"
+        subtitle="Compare the long-term costs of standard website builders against an Accio custom cloud build."
+        left={comparison.left}
+        right={comparison.right} />
+
+    <Services
+        id="services"
+        title={servicesIntro.title}
+        subtitle={servicesIntro.subtitle}
+        items={features} />
+
+    <Faq id="faq" title="Frequently Asked Questions" items={faqs} emitJsonLd />
+
+    <CtaSection id="contact" title={cta.title} subhead={cta.subhead}>
+        <ContactForm id="contact" turnstileSiteKey={publicEnv.turnstileSiteKey} />
+    </CtaSection>
+</Page>

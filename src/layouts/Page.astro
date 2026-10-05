@@ -1,0 +1,62 @@
+---
+/**
+ * Site layout: wires this site's config into astro-common's BaseLayout, so pages
+ * only supply a title and their content.
+ */
+import BaseLayout from '@common/components/BaseLayout.astro';
+import { site, keywords } from '../config/site';
+import logo from '../assets/full-logo.webp';
+import '../styles/theme.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  noindex?: boolean;
+  /** Set true only on pages that render a Turnstile widget. */
+  turnstile?: boolean;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+}
+
+const { title, description, noindex, turnstile, jsonLd } = Astro.props;
+
+const navLinks = site.nav ?? [];
+const footerBusinessName = site.legalName ?? site.name;
+
+// The original wordmark is a 480x260 raster shown at 130px tall. Keep the
+// explicit height so the header matches the design; see theme.css for the
+// mobile breakpoint.
+const header = {
+  logo,
+  logoAlt: `${site.name} Logo`,
+  navLinks,
+  cta: { href: '#contact', label: 'Get Started' },
+  logoHeight: '130px',
+};
+---
+
+<BaseLayout
+  {site}
+  {title}
+  {description}
+  {noindex}
+  {turnstile}
+  {jsonLd}
+  ogImage={logo}
+  bodyClass="page"
+  {header}
+  footer={{
+    businessName: footerBusinessName,
+    tagline: site.tagline,
+  }}>
+  <meta slot="head" name="keywords" content={keywords.join(', ')} />
+
+  <main>
+    <slot />
+  </main>
+
+  <Fragment slot="scripts">
+    <script>
+      import '@common/scripts/index';
+    </script>
+  </Fragment>
+</BaseLayout>

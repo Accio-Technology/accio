@@ -1,0 +1,102 @@
+@font-face {
+    font-family: 'Plus Jakarta Sans';
+    font-style: normal;
+    font-weight: 400 800;
+    font-display: swap;
+    src: url('/fonts/plus-jakarta-sans-variable.woff2') format('woff2');
+}
+
+/*
+  Accio's palette is identical to the astro-common defaults, so no design tokens
+  are overridden here. If the brand changes, override tokens in a `@layer site`
+  block rather than editing anything in src/common:
+
+      @layer site {
+          :root { --color-primary: #b45309; }
+      }
+*/
+
+/*
+  The hero wordmark is a 480x260 raster rendered at 130px tall (see the
+  logoHeight prop in src/layouts/Page.astro). The original design dropped it to
+  90px on mobile; the library sets height inline, so the override needs
+  !important to win over that inline style.
+*/
+@media (max-width: 868px) {
+    .site-header .logo-img {
+        height: 90px !important;
+    }
+}
+
+/*
+  Bespoke "Target Web Performance" card rendered into Hero's `visual` slot.
+  Accio-specific, so it stays here rather than in the shared library.
+*/
+.hero-card {
+    position: relative;
+    padding: 32px;
+    background: var(--color-dark);
+    border: 1px solid rgb(255 255 255 / 0.1);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-raised);
+    color: #fff;
+}
+
+.hero-card h3 {
+    margin-bottom: 20px;
+    color: #fff;
+    font-size: 20px;
+}
+
+.speed-score {
+    padding: 24px;
+    margin-bottom: 20px;
+    background: rgb(255 255 255 / 0.05);
+    border: 1px solid rgb(255 255 255 / 0.1);
+    border-radius: var(--radius-lg);
+    text-align: center;
+}
+
+.speed-score p {
+    margin-bottom: 0;
+    color: var(--color-success);
+    font-weight: 700;
+}
+
+.score-circle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 12px;
+    border: 6px solid var(--color-success);
+    border-radius: 50%;
+    box-shadow: 0 0 20px rgb(16 185 129 / 0.3);
+    color: var(--color-success);
+    font-size: 36px;
+    font-weight: 800;
+}
+
+.score-details {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    color: var(--text-muted);
+    font-size: 14px;
+}
+
+.score-row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.score-row .value {
+    color: #38bdf8;
+    font-weight: 700;
+}
+
+.score-row [data-tone='positive'] {
+    color: var(--color-success);
+    font-weight: 700;
+}

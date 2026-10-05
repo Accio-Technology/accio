@@ -1,3 +1,10 @@
 {
-  "extends": "astro/tsconfigs/base"
+  "extends": "astro/tsconfigs/base",
+  "include": [".astro/types.d.ts", "**/*"],
+  "exclude": ["dist", "node_modules", "src/common"],
+  "compilerOptions": {
+    "paths": {
+      "@common/*": ["./src/common/*"]
+    }
+  }
 }
