@@ -14,7 +14,7 @@ export const hero = {
   tag: '⚡ Custom Web Design & Subscription-Free Hosting',
   title: 'Custom Business Websites Built For Maximum Speed.',
   subhead:
-    "Whether you're launching a brand-new business or migrating an existing website off Wix, Squarespace, or Shopify, we build custom sites on high-performance cloud infrastructure with zero monthly website builder fees.",
+    "Whether you're launching a brand-new business or migrating an existing website off Wix, Squarespace, or Shopify, we build custom sites on high-performance cloud infrastructure with <strong>zero monthly website builder fees</strong>.",
   primaryCta: { href: '#contact', label: 'Start Your Website Project' },
   secondaryCta: { href: '#solutions', label: 'Explore Options' },
 };

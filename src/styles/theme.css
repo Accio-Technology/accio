@@ -8,12 +8,12 @@
 
 /*
   Accio's palette is identical to the astro-common defaults, so no design tokens
-  are overridden here. If the brand changes, override tokens in a `@layer site`
-  block rather than editing anything in src/common:
+  are overridden here. If the brand changes, override tokens on a descendant of
+  :root (the declaration then beats the inherited value regardless of stylesheet
+  order — never wrap the override in @layer, or it loses to the library's
+  unlayered tokens):
 
-      @layer site {
-          :root { --color-primary: #b45309; }
-      }
+      body { --color-primary: #b45309; }
 */
 
 /*
@@ -60,7 +60,16 @@
 .speed-score p {
     margin-bottom: 0;
     color: var(--color-success);
+    font-size: 18px;
     font-weight: 700;
+}
+
+@media (max-width: 868px) {
+    /* The original dropped the score label to 16px on phones so it stays on
+       one line; 18px wraps and grows the card by a line. */
+    .speed-score p {
+        font-size: 16px;
+    }
 }
 
 .score-circle {
@@ -99,4 +108,150 @@
 .score-row [data-tone='positive'] {
     color: var(--color-success);
     font-weight: 700;
+}
+
+/* =========================================================
+   Original-site design layer
+   Layout decisions from the pre-migration global.css that the shared library
+   deliberately generalised away. They belong to this site, not to src/common.
+
+   Override strategy (no !important, no load-order guessing):
+   - Section IDs (#solutions, #comparison, …) outrank the components' scoped
+     [data-astro-cid-*] attribute selectors, so ID-scoped rules always win.
+   - Custom properties declared on <body> beat the ones :root inherits, so
+     token overrides here win regardless of how the CSS is bundled.
+   ========================================================= */
+
+/*
+  Section rhythm: the original kept ~100px of section padding on phones (the
+  library tightens to 64px) and used 90px for the solutions band at every
+  breakpoint. The CTA and hero have literal paddings in the library and already
+  match (60px/50px on mobile).
+*/
+#solutions {
+    padding-block: 90px;
+}
+
+@media (max-width: 868px) {
+    body {
+        --section-padding: 100px;
+    }
+}
+
+/* Section subtitles were near-black 16px; the library renders them muted 17px. */
+body .section-header p {
+    color: var(--text-strong);
+    font-size: 16px;
+}
+
+/* Button corners were 10px. The library's --radius-md stays 12px for icon
+   tiles, so this targets buttons only. */
+body .btn {
+    border-radius: 10px;
+}
+
+/*
+  The original headings inherited the body's 1.6 line-height (the old global.css
+  set no heading line-height). The library reset forces 1.2, which tightens every
+  h2/h3 line box and cascades into card/section heights. Restore the original
+  rhythm. Hero h1 keeps the library's 1.15.
+*/
+body h2,
+body h3 {
+    line-height: inherit;
+}
+
+/*
+  The original tall submit button used 18px/36px padding (.cta-banner .btn);
+  the library's form-submit uses 16px/36px.
+*/
+body .cta .form-submit {
+    padding: 18px 36px;
+}
+
+/* Original form fields (and inputs generally) were 10px radius, not --radius-sm. */
+body .cta .form-field input,
+body .cta .form-field textarea {
+    border-radius: 10px;
+}
+
+/*
+  Original solution cards had no internal gap: the feature list's bottom margin
+  (24px) supplied the air between content and the button, with space-between
+  absorbing the rest. The library replaced it with a 24px card gap and zeroed
+  the list margin, which grows the card 10px. Restore the original scheme.
+*/
+body #solutions .solution-card {
+    gap: 0;
+}
+
+body #solutions .solution-bullets {
+    margin-bottom: 24px;
+}
+
+/* Original stat figures were 700 weight, not the library's default 800. */
+body .hero-stat dd {
+    font-weight: 700;
+}
+
+/*
+  The original kept the solutions and comparison cards side-by-side on phones
+  with a deliberately dense type scale ("TARGETED MOBILE OVERRIDES ONLY" in the
+  old global.css). Values are taken verbatim from it.
+*/
+@media (max-width: 868px) {
+    #solutions .solutions-grid,
+    #comparison .comparison-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    #solutions .solution-card,
+    #comparison .comparison-card {
+        padding: 16px 12px;
+        border-radius: 12px;
+    }
+
+    #solutions .solution-badge {
+        margin-bottom: 10px;
+        padding: 2px 8px;
+        font-size: 10px;
+    }
+
+    #solutions .solution-card h3,
+    #comparison .comparison-card h3 {
+        margin-bottom: 8px;
+        font-size: 15px;
+        line-height: 1.25;
+    }
+
+    #solutions .solution-card p {
+        margin-bottom: 12px;
+        font-size: 12px;
+        line-height: 1.4;
+    }
+
+    #solutions .solution-bullets li,
+    #comparison .comparison-card li {
+        gap: 6px;
+        padding: 4px 0;
+        font-size: 11px;
+        line-height: 1.3;
+    }
+
+    #solutions .solution-card .btn {
+        padding: 10px 12px;
+        font-size: 12px;
+    }
+
+    /* The dense mobile scale drops the solution list's bottom air (the desktop
+       design-layer override adds 24px) so both cards sit at the original height. */
+    body #solutions .solution-bullets {
+        margin-bottom: 0;
+    }
+
+    /* The original gave the comparison list 16px bottom margin on phones only. */
+    body #comparison .comparison-card > ul {
+        margin-bottom: 16px;
+    }
 }
